@@ -1,5 +1,22 @@
 .venv/
 __pycache__/
 tests/
+docs/
+data/
 *.pyc
 *.env
+
+estructura.txt
+
+# Archivos de LaTeX
+*.aux
+*.log
+*.toc
+*.out
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.synctex.gz
+*.fdb_latexmk
+*.fls

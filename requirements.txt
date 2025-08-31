@@ -1,0 +1,40 @@
+# Análisis de datos
+pandas==1.5.3
+numpy==1.24.3
+xarray==2023.6.0
+netCDF4==1.6.4
+h5netcdf==1.2.0
+scipy==1.10.1
+
+# Geospatial
+geopandas==0.13.2
+shapely==2.0.1
+folium==0.14.0
+geemap==0.28.0
+earthengine-api==0.1.375
+pyproj==3.6.0
+
+# APIs y web
+requests==2.31.0
+cdsapi==0.6.1
+
+# Visualización
+matplotlib==3.7.1
+seaborn==0.12.2
+plotly==5.14.1
+ipywidgets==8.1.1
+
+# Jupyter
+jupyter==1.0.0
+ipykernel==6.23.3
+nbformat==5.9.2
+
+# Utilidades
+python-dotenv==1.0.0
+tqdm==4.65.0
+
+# Logging
+logging-config==0.4.0
+
+# Backends para NetCDF
+h5py==3.9.0
