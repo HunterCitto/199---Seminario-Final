@@ -1,7 +1,6 @@
 .venv/
 __pycache__/
 tests/
-docs/
 data/
 *.pyc
 *.env

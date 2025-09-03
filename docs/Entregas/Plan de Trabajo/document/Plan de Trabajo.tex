@@ -1,0 +1,34 @@
+\documentclass[11pt, a4paper, spanish]{article}
+
+% Preámbulo
+\input{Introducción/packages}
+\input{Introducción/settings}
+
+% Metadatos del documento
+\title{Título del Seminario Final}
+\author{Tu Nombre}
+\date{\today}
+
+\begin{document}
+
+% Portada
+\input{Secciones/portada}
+
+% Índice
+\tableofcontents
+\newpage
+
+% Secciones principales
+\input{Secciones/indice}
+\input{Secciones/objetivos}
+\input{Secciones/antecedentes}
+\input{Secciones/metodologia}
+\input{Secciones/factibilidad}
+\input{Secciones/adicional}
+
+\addcontentsline{toc}{section}{Referencias}
+\label{sec:refs}
+\nocite{*}
+\printbibliography
+
+\end{document}

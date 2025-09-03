@@ -1,0 +1,55 @@
+% seminario-final/document/sections/portada.tex
+
+% Comienza un entorno titlepage para una página independiente
+\begin{titlepage}
+    % Centra todo el contenido verticalmente en la página
+    \vspace*{\fill}
+    \begin{center}
+        
+        % --- Universidad en azul marino ---
+        \LARGE \textbf{Universidad Nacional Guillermo Brown (UNaB)} \\
+        \vspace{1.5cm} % Espacio después del nombre de la universidad
+        
+        % --- Nombre de la materia ---
+        {\large \textbf{Seminario}} \\
+        \vspace{2cm} % Espacio después de la materia
+        
+        % --- Título principal (el más grande) ---
+        {\Huge \textbf{PLAN DE TRABAJO}} \\
+        \vspace{3cm} % Espacio después del título
+        
+        % --- Línea horizontal decorativa ---
+        \rule{\textwidth}{0.4pt} % Línea de 0.4pt de grosor
+        
+        
+        % --- Contenedor de dos columnas para autor y profesor ---
+        \begin{minipage}[t]{0.4\textwidth} % Columna izquierda (40% del ancho)
+            \begin{flushleft} % Alinea el texto a la izquierda
+                \large
+                \textbf{Autor:} \\
+                Villagra Turco, C. Ezequiel
+            \end{flushleft}
+        \end{minipage}
+        \hfill % Espacio flexible entre columnas
+        \begin{minipage}[t]{0.48\textwidth} % Columna derecha (48% del ancho)
+            \begin{flushright} % Alinea el texto a la derecha
+                \large
+                \textbf{Profesor:} \\
+                Juan Domingo Gonzalez
+            \end{flushright}
+        \end{minipage}
+        
+        \vspace{0.5cm} % Espacio antes de la segunda línea
+        \rule{\textwidth}{0.4pt} % Línea de 0.4pt de grosor
+        \vspace{2cm} % Espacio después del bloque de información
+        
+        % --- Fecha en la parte inferior ---
+        {\large \today} % Comando que inserta la fecha actual
+        
+    \end{center}
+    % Rellena el resto de la página para centrar verticalmente el contenido
+    \vspace*{\fill}
+\end{titlepage}
+
+% Después de la portada, fuerza una nueva página
+\newpage
