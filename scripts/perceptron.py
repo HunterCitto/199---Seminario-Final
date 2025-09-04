@@ -12,14 +12,22 @@ class Perceptron() :
         self.accuracy_history = []
         self.training_data = None
     
+    def linear_sep_data(n = 100, p = 2):
+        x = np.random.uniform(-1, 1, (n, p))
+        w = np.ones((p, 1))
+        y = np.where((x @ w) >= 0, 1, -1)
+        return x, y.flatten(), w
+
     def predict(self, x) :
         z = np.dot(x, self.w) + self.b
-        return np.where(z >= 0, 1, 0)
+        return np.where(z >= 0, 1, -1)
 
     def train(self, x , y, epochs = 100, verbose = False) :
 
         self.training_data = (x, y)
+        convergence_epoch = epochs
 
+        # Información inicial del entrenamiento.
         if verbose:
             print("\n" + "="*50)
             print("INICIO DEL ENTRENAMIENTO")
@@ -30,8 +38,6 @@ class Perceptron() :
             print(f"Bias inicial: {self.b[0]:.4f}")
             print("-" * 50)
         
-        convergence_epoch = epochs
-
         for epoch in range(epochs) : # Por cada epoca...
             
             # Contadores de errores y aciertos.
@@ -61,17 +67,26 @@ class Perceptron() :
                 convergence_epoch = epoch + 1
                 if verbose :
                     print(f"¡Convergencia alcanzada en época {convergence_epoch}!")
-                else :
-                    return convergence_epoch
+                    break
 
         if verbose :
             self.print_results(x, y, convergence_epoch)
 
+        return convergence_epoch
+
+    ### Funciones de visualización y reporte de resultados ###
     def print_results(self, x, y, convergence_epoch):
         n = len(x)
+
         final_errors = self.error_history[-1] if self.error_history else n
         final_accuracy = (n - final_errors) / n
-        
+
+        # # Mostrar formas de los arrays para ajustar errores.
+        # print(f"FORMA de x: {x.shape}")
+        # print(f"FORMA de y: {y.shape}")
+        # print(f"FORMA de self.w: {self.w.shape}")
+        # print(f"FORMA de self.b: {self.b.shape}")
+
         print("\n" + "="*50)
         print("RESULTADOS DEL ENTRENAMIENTO")
         print("="*50)
@@ -81,20 +96,15 @@ class Perceptron() :
         print(f"Bias final: {self.b[0]:.4f}")
         
         # Matriz de confusión simplificada
-        y_pred = np.array([self.predict(x_i) for x_i in x]).flatten()
+        # y_pred = np.array([self.predict(x_i) for x_i in x]).flatten()
+        y_pred = self.predict(x).flatten()
+        print(f"Predicciones: {y_pred.shape}, Verdaderos: {y.shape}")
         correct = np.sum(y_pred == y)
         incorrect = n - correct
         
         print(f"\nMatriz de confusión simplificada:")
         print(f"Correctas: {correct}/{n}")
         print(f"Incorrectas: {incorrect}/{n}")
-        
-        # # Ejemplos de prueba
-        # print(f"\nEjemplos de prueba (primeras 5 muestras):")
-        # for i in range(min(5, n)):
-        #     pred = self.predict(x[i])
-        #     status = "✓" if pred == y[i] else "✗"
-        #     print(f"{status} Entrada {x[i].round(2)} -> Pred: {pred}, Real: {y[i]}")
 
     def plot_training_history(self):
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))

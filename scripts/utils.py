@@ -9,8 +9,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 def linear_sep_data(n = 100, p = 2):
-    x = np.random.uniform(-1, 1, (n, p))
-    y = (x.sum(axis = 1) > 0).astype(int)
+    x = np.random.uniform(0, 1, (n, p))
+    w = np.ones((p, 1))
+    y = np.sign(x @ w)
     return x, y
 
 def create_geodataframe_from_csv(csv_path, lat_col='latitude', lon_col='longitude'):
