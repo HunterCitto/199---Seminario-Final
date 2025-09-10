@@ -31,8 +31,8 @@ class ProjectConfig:
     REF_END_DATE = "2024-12-28"
     
     # Credenciales (desde variables de entorno)
-    COPERNICUS_UID = os.getenv("COPERNICUS_UID")
-    COPERNICUS_API_KEY = os.getenv("COPERNICUS_API_KEY")
+    CDS_UID = os.getenv("CDS_UID")
+    CDS_API_KEY = os.getenv("CDS_API_KEY")
     FIRMS_API_KEY = "dfddee9b9ccda792d06d15dca8ee3cfd"
     
     # Parámetros de análisis

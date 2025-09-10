@@ -1,12 +1,25 @@
+import os
 import pandas as pd
 import numpy as np
 import geopandas as gpd
-from shapely.geometry import Point
 import matplotlib.pyplot as plt
-from datetime import datetime, timedelta
 import logging
 
+from datetime import datetime, timedelta
+from shapely.geometry import Point
+
 logger = logging.getLogger(__name__)
+
+def dataframe_to_csv(df, path):
+    """Guarda un DataFrame en CSV. Chequea existencia de carpeta."""
+    try:
+        folder = os.path.dirname(path)
+        if folder and not os.path.exists(folder):
+            os.makedirs(folder, exist_ok=True)
+        df.to_csv(path, index=False)
+        logger.info(f"DataFrame guardado en {path}")
+    except Exception as e:
+        logger.error(f"Error guardando DataFrame en CSV: {e}")
 
 def linear_sep_data(n = 100, p = 2):
     x = np.random.uniform(0, 1, (n, p))
@@ -29,6 +42,7 @@ def create_geodataframe_from_csv(csv_path, lat_col='latitude', lon_col='longitud
 def save_plot(fig, filename, subfolder=""):
     """Guarda gráficos en la carpeta docs"""
     from scripts.config import BASE_DIR
+
     plot_path = BASE_DIR / "docs" / subfolder / filename
     plot_path.parent.mkdir(exist_ok=True)
     fig.savefig(plot_path, dpi=300, bbox_inches='tight')

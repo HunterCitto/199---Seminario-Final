@@ -10,8 +10,28 @@ class Perceptron() :
 
         self.error_history = []
         self.accuracy_history = []
-        self.training_data = None
-    
+        self.training_data = None    
+
+    def evaluar_cota(self, x, y, w, steps) :
+
+        R = np.max(np.linalg.norm(x, axis = 1))
+
+        margins = y * (x @ w).flatten()
+        rho = np.min(np.abs(margins))
+
+        nsq_w = np.linalg.norm(w) ** 2
+
+        bound = (R ** 2) / (rho ** 2) * nsq_w
+
+        print("\n" + "="*50)
+        print("EVALUACIÓN DE LA COTA TEÓRICA")
+        print("="*50)
+        print(f"R (máx norma de x): {R:.4f}")
+        print(f"ρ (margen mínimo): {rho:.4f}")
+        print(f"||w*||^2: {nsq_w:.4f}")
+        print(f"Cota teórica: {bound:.2f}")
+        print(f"¿Se cumple? {'Sí' if steps <= bound else 'No'}")
+
     def linear_sep_data(n = 100, p = 2):
         x = np.random.uniform(-1, 1, (n, p))
         w = np.ones((p, 1))
@@ -22,13 +42,13 @@ class Perceptron() :
         z = np.dot(x, self.w) + self.b
         return np.where(z >= 0, 1, -1)
 
-    def train(self, x , y, epochs = 100, verbose = False) :
+    def train(self, x , y, epochs = 100, resultados = False) :
 
         self.training_data = (x, y)
         convergence_epoch = epochs
 
         # Información inicial del entrenamiento.
-        if verbose:
+        if resultados:
             print("\n" + "="*50)
             print("INICIO DEL ENTRENAMIENTO")
             print("="*50)
@@ -60,16 +80,16 @@ class Perceptron() :
             self.error_history.append(errors) # Registro el número de errores.
             self.accuracy_history.append(accuracy) # Registro la precisión.
 
-            if verbose and (epoch % 20 == 0 or epoch == epochs-1 or errors == 0) :
+            if resultados and (epoch % 20 == 0 or epoch == epochs-1 or errors == 0) :
                 print(f"Época {epoch:3d}: Errores = {errors:3d}, Precisión = {accuracy:.1%}")
 
             if errors == 0 :
                 convergence_epoch = epoch + 1
-                if verbose :
+                if resultados :
                     print(f"¡Convergencia alcanzada en época {convergence_epoch}!")
                     break
 
-        if verbose :
+        if resultados :
             self.print_results(x, y, convergence_epoch)
 
         return convergence_epoch
@@ -80,12 +100,6 @@ class Perceptron() :
 
         final_errors = self.error_history[-1] if self.error_history else n
         final_accuracy = (n - final_errors) / n
-
-        # # Mostrar formas de los arrays para ajustar errores.
-        # print(f"FORMA de x: {x.shape}")
-        # print(f"FORMA de y: {y.shape}")
-        # print(f"FORMA de self.w: {self.w.shape}")
-        # print(f"FORMA de self.b: {self.b.shape}")
 
         print("\n" + "="*50)
         print("RESULTADOS DEL ENTRENAMIENTO")
@@ -132,6 +146,7 @@ class Perceptron() :
             self.plot_decision_boundary()
 
     def plot_decision_boundary(self):
+
 
         if self.training_data is None:
             print("No hay datos de entrenamiento para visualizar.")

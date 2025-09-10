@@ -1,4 +1,4 @@
-from .weather_tools import WeatherDataFetcher
+from .openmeteo_tools import OpenMeteoWeather
 from .cds_tools import CDSTools
 from .copernicus_tools import CopernicusTools
 from .firms_tools import FIRMSTools
@@ -7,7 +7,7 @@ from .project_config import ProjectConfig, logger
 from .perceptron import Perceptron
 from .spatial_analysis import SpatialAnalysis
 
-__all__ = ['WeatherDataFetcher', 
+__all__ = ['OpenMeteoWeather', 
            'CDSTools', 
            'CopernicusTools', 
            'FIRMSTools', 

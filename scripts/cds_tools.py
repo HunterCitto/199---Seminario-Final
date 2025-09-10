@@ -12,7 +12,7 @@ import numpy as np
 from pathlib import Path
 from typing import Optional, Dict, List, Union, Tuple
 from dateutil.relativedelta import relativedelta
-from project_config import ProjectConfig
+import project_config as cfg
 
 # Configurar logging
 logging.basicConfig(
@@ -220,11 +220,12 @@ class CDSTools:
             )
             
             # Crear directorio de salida
-            raw_dir = Path('./data/raw')
+
+            raw_dir = Path(f"{cfg.DATA_RAW}/copernicus")
             raw_dir.mkdir(parents=True, exist_ok=True)
             
             # Nombre del archivo de salida
-            filename = f"{dataset}_{variable}_{start_date}_{end_date}_{latitude}_{longitude}.{output_format}"
+            filename = f"{dataset}_{start_date}_{end_date}_{latitude}_{longitude}.{output_format}"
             output_path = raw_dir / filename
             
             logger.info(f"Iniciando descarga de datos para {variable}...")
