@@ -7,17 +7,17 @@ import logging.config
 # Cargar variables de entorno
 load_dotenv()
 
-# Configuración de paths
-BASE_DIR = Path(__file__).resolve().parent.parent
-DATA_RAW = BASE_DIR / "data" / "raw"
-DATA_PROCESSED = BASE_DIR / "data" / "processed"
-LOGS_DIR = BASE_DIR / "logs"
-
-# Crear directorios si no existen
-for directory in [DATA_RAW, DATA_PROCESSED, LOGS_DIR]:
-    directory.mkdir(parents=True, exist_ok=True)
-
 class ProjectConfig:
+
+    # Configuración de paths
+    BASE_DIR = Path(__file__).resolve().parent.parent
+    DATA_RAW = BASE_DIR / "data" / "raw"
+    DATA_PROCESSED = BASE_DIR / "data" / "processed"
+    LOGS_DIR = BASE_DIR / "logs"
+
+    # Crear directorios si no existen
+    for directory in [DATA_RAW, DATA_PROCESSED, LOGS_DIR]:
+        directory.mkdir(parents = True, exist_ok = True)
 
     # Bounding box para Río Negro, Patagonia (ejemplo)
     BBOX = [-71.884,-41.993,-71.046,-41.031]  # [Oeste, Sur, Este, Norte]
@@ -58,15 +58,3 @@ class ProjectConfig:
         'acq_date', 'acq_time', 'satellite', 'instrument', 'confidence',
         'version', 'bright_t31', 'frp', 'daynight'
     ]
-
-# Configurar logging
-def setup_logging():
-    logging.config.fileConfig(
-        BASE_DIR / 'logging_config.ini',
-        defaults={'logfilename': str(LOGS_DIR / 'wildfire_analysis.log')},
-        disable_existing_loggers=False
-    )
-    return logging.getLogger(__name__)
-
-# Inicializar logger
-logger = setup_logging()

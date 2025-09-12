@@ -12,7 +12,7 @@ import numpy as np
 from pathlib import Path
 from typing import Optional, Dict, List, Union, Tuple
 from dateutil.relativedelta import relativedelta
-import project_config as cfg
+from project_config import ProjectConfig as cfg
 
 # Configurar logging
 logging.basicConfig(
