@@ -10,41 +10,40 @@ class Perceptron() :
 
         self.error_history = []
         self.accuracy_history = []
-        self.training_data = None    
+        self.training_data = None
 
     def evaluar_cota(self, x, y, w, steps) :
 
-        R = np.max(np.linalg.norm(x, axis = 1))
+        R = (np.max(np.linalg.norm(x, axis=1))) ** 2 # R^2
+        rho = np.min(y * (x @ w).flatten()) ** 2 # ρ^2
+        nsq_w = np.linalg.norm(w, ord = 2) ** 2 # ||w*||^2
 
-        margins = y * (x @ w).flatten()
-        rho = np.min(np.abs(margins))
-
-        nsq_w = np.linalg.norm(w) ** 2
-
-        bound = (R ** 2) / (rho ** 2) * nsq_w
+        # bound = R / (rho * nsq_w)
+        bound = (R * nsq_w) / rho
 
         print("\n" + "="*50)
         print("EVALUACIÓN DE LA COTA TEÓRICA")
         print("="*50)
-        print(f"R (máx norma de x): {R:.4f}")
-        print(f"ρ (margen mínimo): {rho:.4f}")
+        print(f"R^2: {R:.4f}")
+        print(f"ρ^2: {rho:.4f}")
         print(f"||w*||^2: {nsq_w:.4f}")
-        print(f"Cota teórica: {bound:.2f}")
-        print(f"¿Se cumple? {'Sí' if steps <= bound else 'No'}")
-
+        print(f"Cota: {bound:.2f}")
+        print(f"¿Cumple? {'Sí' if steps <= bound else 'No'}")
+    
     def linear_sep_data(n = 100, p = 2):
-        x = np.random.uniform(-1, 1, (n, p))
-        w = np.ones((p, 1))
-        y = np.where((x @ w) >= 0, 1, -1)
+        x = np.random.uniform(-1, 1, (n, p)) # Datos aleatorios en [-1, 1]
+        w = np.ones((p, 1)) # Vector de pesos (1, 1, ..., 1)
+        y = np.where((x @ w) >= 0, 1, -1) # Etiquetas según el hiperplano
         return x, y.flatten(), w
 
     def predict(self, x) :
-        z = np.dot(x, self.w) + self.b
-        return np.where(z >= 0, 1, -1)
+        z = np.dot(x, self.w) + self.b # Cálculo de la salida linea.
+        return np.where(z >= 0, 1, -1) # Función escalón.
 
-    def train(self, x , y, epochs = 100, resultados = False) :
+    def train(self, x , y, w, epochs = 100, resultados = False) :
 
         self.training_data = (x, y)
+        self.w = w
         convergence_epoch = epochs
 
         # Información inicial del entrenamiento.
@@ -80,15 +79,18 @@ class Perceptron() :
             self.error_history.append(errors) # Registro el número de errores.
             self.accuracy_history.append(accuracy) # Registro la precisión.
 
+            # Mostrar información cada 20 épocas, la última y si hay convergencia.
             if resultados and (epoch % 20 == 0 or epoch == epochs-1 or errors == 0) :
                 print(f"Época {epoch:3d}: Errores = {errors:3d}, Precisión = {accuracy:.1%}")
 
+            # Criterio de convergencia: si no hay errores.
             if errors == 0 :
                 convergence_epoch = epoch + 1
                 if resultados :
                     print(f"¡Convergencia alcanzada en época {convergence_epoch}!")
                     break
 
+        # Mostrar resultados finales.
         if resultados :
             self.print_results(x, y, convergence_epoch)
 
@@ -101,6 +103,12 @@ class Perceptron() :
         final_errors = self.error_history[-1] if self.error_history else n
         final_accuracy = (n - final_errors) / n
 
+        # # Mostrar formas de los arrays para ajustar errores.
+        # print(f"FORMA de x: {x.shape}")
+        # print(f"FORMA de y: {y.shape}")
+        # print(f"FORMA de self.w: {self.w.shape}")
+        # print(f"FORMA de self.b: {self.b.shape}")
+
         print("\n" + "="*50)
         print("RESULTADOS DEL ENTRENAMIENTO")
         print("="*50)
@@ -109,14 +117,10 @@ class Perceptron() :
         print(f"Pesos finales: {self.w.flatten().round(4)}")
         print(f"Bias final: {self.b[0]:.4f}")
         
-        # Matriz de confusión simplificada
-        # y_pred = np.array([self.predict(x_i) for x_i in x]).flatten()
         y_pred = self.predict(x).flatten()
-        print(f"Predicciones: {y_pred.shape}, Verdaderos: {y.shape}")
         correct = np.sum(y_pred == y)
         incorrect = n - correct
         
-        print(f"\nMatriz de confusión simplificada:")
         print(f"Correctas: {correct}/{n}")
         print(f"Incorrectas: {incorrect}/{n}")
 
@@ -146,7 +150,6 @@ class Perceptron() :
             self.plot_decision_boundary()
 
     def plot_decision_boundary(self):
-
 
         if self.training_data is None:
             print("No hay datos de entrenamiento para visualizar.")
