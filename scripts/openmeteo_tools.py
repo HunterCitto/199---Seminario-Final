@@ -51,7 +51,7 @@ class OpenMeteoWeather :
         except ValueError as e:
             raise ValueError(f"Formato de fecha inválido: {e}")
     
-    def obtener_clima(self, lat: float, lon: float, start_date: str, end_date: str, bbox: str) -> pd.DataFrame :
+    def get_meteorological_data(self, start_date: str, end_date: str, bbox: str) -> pd.DataFrame :
         """
         Obtiene datos históricos del clima de Open-Meteo y los convierte en DataFrame
         
@@ -73,8 +73,8 @@ class OpenMeteoWeather :
         
         # Parámetros para la API de Open-Meteo
         params = {
-            'latitude': lat,
-            'longitude': lon,
+            'latitude': 52.52,
+            'longitude': 13.41,
             'start_date': start_date,
             'end_date': end_date,
             'hourly': [

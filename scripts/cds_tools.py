@@ -1,7 +1,3 @@
-"""
-Herramientas para obtener datos del Climate Data Store (CDS) de Copernicus.
-"""
-
 import os
 import logging
 import datetime
@@ -121,6 +117,45 @@ class CDSTools:
             [f'{day:02d}' for day in days]
         )
     
+    def _clean_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Limpia y formatea el DataFrame.
+        
+        Args:
+            df: DataFrame a limpiar
+            
+        Returns:
+            DataFrame limpio
+        """
+        # Eliminar columnas innecesarias
+        columns_to_drop = ['number', 'step', 'surface', 'valid_time', 'heightAboveGround']
+        df = df.drop(columns=[col for col in columns_to_drop if col in df.columns])
+        
+        # Renombrar columnas comunes
+        rename_dict = {
+            't2m': 'temperature_2m',
+            'time': 'datetime',
+            'latitude': 'lat',
+            'longitude': 'lon',
+            't': 'temperature',
+            'tp': 'total_precipitation'
+        }
+        df = df.rename(columns={col: rename_dict[col] for col in df.columns if col in rename_dict})
+        
+        # Convertir temperatura de Kelvin a Celsius si existe
+        temp_cols = [col for col in df.columns if 'temperature' in col.lower()]
+        for col in temp_cols:
+            if df[col].max() > 200:  # Asumir que está en Kelvin si los valores son altos
+                df[col] = df[col] - 273.15
+        
+        # Formatear datetime
+        if 'datetime' in df.columns:
+            df['datetime'] = pd.to_datetime(df['datetime'])
+            df['date'] = df['datetime'].dt.date
+            df['hour'] = df['datetime'].dt.hour
+        
+        return df
+
     def build_request_params(
         self,
         dataset: str,
@@ -190,7 +225,7 @@ class CDSTools:
         latitude: float = 40.4168,
         longitude: float = -3.7038,
         radius: float = 0.5,
-        output_format: str = 'netcdf'  # Cambiado a netcdf por defecto
+        output_format: str = 'netcdf'
     ) -> Optional[str]:
         """
         Descarga datos del CDS para un área alrededor de un centroide.
@@ -340,45 +375,6 @@ class CDSTools:
             # Intentar con NetCDF como fallback
             logger.info("Intentando descargar en formato NetCDF como fallback...")
             return None
-    
-    def _clean_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        Limpia y formatea el DataFrame.
-        
-        Args:
-            df: DataFrame a limpiar
-            
-        Returns:
-            DataFrame limpio
-        """
-        # Eliminar columnas innecesarias
-        columns_to_drop = ['number', 'step', 'surface', 'valid_time', 'heightAboveGround']
-        df = df.drop(columns=[col for col in columns_to_drop if col in df.columns])
-        
-        # Renombrar columnas comunes
-        rename_dict = {
-            't2m': 'temperature_2m',
-            'time': 'datetime',
-            'latitude': 'lat',
-            'longitude': 'lon',
-            't': 'temperature',
-            'tp': 'total_precipitation'
-        }
-        df = df.rename(columns={col: rename_dict[col] for col in df.columns if col in rename_dict})
-        
-        # Convertir temperatura de Kelvin a Celsius si existe
-        temp_cols = [col for col in df.columns if 'temperature' in col.lower()]
-        for col in temp_cols:
-            if df[col].max() > 200:  # Asumir que está en Kelvin si los valores son altos
-                df[col] = df[col] - 273.15
-        
-        # Formatear datetime
-        if 'datetime' in df.columns:
-            df['datetime'] = pd.to_datetime(df['datetime'])
-            df['date'] = df['datetime'].dt.date
-            df['hour'] = df['datetime'].dt.hour
-        
-        return df
     
     def get_climate_data(
         self,

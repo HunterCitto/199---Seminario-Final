@@ -23,12 +23,8 @@ class ProjectConfig:
     BBOX = [-71.884,-41.993,-71.046,-41.031]  # [Oeste, Sur, Este, Norte]
 
     # Período de análisis (incendio)
-    START_DATE = "2024-12-20"
-    END_DATE = "2024-12-29"
-
-    # Período de referencia (años anteriores para comparación)
-    REF_START_DATE = "2024-12-23"
-    REF_END_DATE = "2024-12-28"
+    START_DATE = "2024-12-01"
+    END_DATE = "2024-12-10"
     
     # Credenciales (desde variables de entorno)
     CDS_UID = os.getenv("CDS_UID")
@@ -40,7 +36,7 @@ class ProjectConfig:
     VEGETATION_INDICES = ["NDVI", "EVI", "NBR", "NDMI"]
     
     # Configuración de APIs
-    # FIRMS_BASE_URL = "https://firms.modaps.eosdis.nasa.gov/api/area/csv"
+    OPENMETEO_BASE_URL = "https://archive-api.open-meteo.com/v1/archive"
     FIRMS_BASE_URL = "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{api_key}/{source}/{area}/{day_range}/{start_date}"
     COPERNICUS_API_URL = "https://cds.climate.copernicus.eu/api/v2"
 

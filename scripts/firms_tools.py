@@ -14,7 +14,7 @@ class FIRMSTools:
 
     def __init__(self, config):
         self.config = config
-        self.raw_data_path = Path("../data/raw/firms")
+        self.raw_data_path = Path(f"{config.DATA_RAW}/firms")
         self.raw_data_path.mkdir(parents=True, exist_ok=True)
         self.session = self._create_session()
     

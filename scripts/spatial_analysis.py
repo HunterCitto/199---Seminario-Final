@@ -172,13 +172,13 @@ class SpatialAnalysis :
             self.create_geodataframe()
         
         # Guardar GeoJSON
-        geojson_path = output_path / 'fire_locations.geojson'
+        geojson_path = f"{output_path}/fire_locations.geojson"
         self.gdf.to_file(geojson_path, driver='GeoJSON')
         
         # Guardar estadísticas
         stats = self.calculate_basic_stats()
         stats_df = pd.DataFrame([stats])
-        stats_path = output_path / 'spatial_stats.csv'
+        stats_path = f"{output_path}/spatial_stats.csv"
         stats_df.to_csv(stats_path, index=False)
         
         logger.info(f"Resultados exportados a {output_path}")
