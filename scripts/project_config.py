@@ -20,11 +20,11 @@ class ProjectConfig:
         directory.mkdir(parents = True, exist_ok = True)
 
     # Bounding box para Río Negro, Patagonia (ejemplo)
-    BBOX = [-71.884,-41.993,-71.046,-41.031]  # [Oeste, Sur, Este, Norte]
+    BBOX = [-71.8756,-41.5862,-71.3782,-41.3608]  # [Oeste, Sur, Este, Norte]
 
     # Período de análisis (incendio)
     START_DATE = "2024-12-01"
-    END_DATE = "2024-12-10"
+    END_DATE = "2025-03-31"
     
     # Credenciales (desde variables de entorno)
     CDS_UID = os.getenv("CDS_UID")
