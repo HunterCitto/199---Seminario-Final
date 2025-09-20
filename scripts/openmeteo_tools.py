@@ -68,7 +68,7 @@ class OpenMeteoWeather :
         # Validar fechas
         self._validate_dates(start_date, end_date)
         
-        logger.info(f"Obteniendo datos para coordenadas: ({lat}, {lon})")
+        # logger.info(f"Obteniendo datos para coordenadas: ({lat}, {lon})")
         logger.info(f"Período: {start_date} hasta {end_date}")
         
         # Parámetros para la API de Open-Meteo
@@ -97,6 +97,7 @@ class OpenMeteoWeather :
                 print(f"Timezone difference to GMT+0: {response.UtcOffsetSeconds()}s")
                 
                 # Process hourly data. The order of variables needs to be the same as requested.
+
                 hourly = response.Hourly()
                 hourly_temperature_2m = hourly.Variables(0).ValuesAsNumpy()
                 hourly_relative_humidity_2m = hourly.Variables(1).ValuesAsNumpy()
@@ -118,7 +119,10 @@ class OpenMeteoWeather :
                     freq = pd.Timedelta(seconds = hourly.Interval()),
                     inclusive = "left"
                 )}
-                
+
+                hourly_data["latitude"] = response.Latitude()
+                hourly_data["longitude"] = response.Longitude()
+                hourly_data["elevation"] = response.Elevation()                
                 hourly_data["temperature_2m"] = hourly_temperature_2m
                 hourly_data["relative_humidity_2m"] = hourly_relative_humidity_2m
                 hourly_data["precipitation"] = hourly_precipitation

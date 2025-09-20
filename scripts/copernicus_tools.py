@@ -1,17 +1,18 @@
 import cdsapi
 import xarray as xr
 import pandas as pd
-from pathlib import Path
 import logging
 import os
+from pathlib import Path
+from project_config import ProjectConfig as cfg
 
 logger = logging.getLogger(__name__)
 
 class CopernicusTools:
-    def __init__(self, config) :
-        self.config = config
+    def __init__(self) :
+        self.config = cfg
         self.client = cdsapi.Client()
-        self.raw_data_path = Path(f"{config.DATA_RAW}/copernicus")
+        self.raw_data_path = Path(f"{cfg.DATA_RAW}/copernicus")
     
     def get_meteorological_data(self, mode = 'land'):
         """Obtiene datos meteorológicos completos"""
