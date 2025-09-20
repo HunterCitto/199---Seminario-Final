@@ -9,6 +9,7 @@ from project_config import ProjectConfig as cfg
 logger = logging.getLogger(__name__)
 
 class CopernicusTools:
+    
     def __init__(self) :
         self.config = cfg
         self.client = cdsapi.Client()
@@ -34,8 +35,8 @@ class CopernicusTools:
             logger.info(f"Iniciando descarga de datos ERA5-Land: {variables}")
             
             filename = f"era5_land_{self.config.START_DATE}_{self.config.END_DATE}.nc"
-            filepath = self.raw_data_path / filename
-            
+            filepath = self.raw_data_path / "land" / filename
+
             if filepath.exists():
                 logger.info(f"Archivo ya existe: {filepath}")
                 return self.__load_file(filepath)
@@ -65,13 +66,29 @@ class CopernicusTools:
         """Descarga datos ERA5-Levels para variables específicas"""
 
         variables = [
+            "2m_dewpoint_temperature",
             "2m_temperature",
-            "snow_depth",
-            "10m_u_component_of_wind",
-            "10m_v_component_of_wind",
             "surface_pressure",
+            "total_precipitation",
+            "100m_u_component_of_wind",
+            "100m_v_component_of_wind",
+            "total_column_rain_water",
+            "soil_temperature_level_1",
+            "soil_temperature_level_2",
+            "soil_temperature_level_3",
+            "soil_temperature_level_4",
+            "soil_type",
+            "volumetric_soil_water_layer_1",
+            "volumetric_soil_water_layer_2",
+            "volumetric_soil_water_layer_3",
+            "volumetric_soil_water_layer_4",
+            "high_vegetation_cover",
             "leaf_area_index_high_vegetation",
-            "leaf_area_index_low_vegetation"
+            "leaf_area_index_low_vegetation",
+            "low_vegetation_cover",
+            "type_of_high_vegetation",
+            "type_of_low_vegetation",
+            "snow_depth"
         ]
 
         try:
@@ -103,7 +120,7 @@ class CopernicusTools:
         except Exception as e:
             logger.error(f"Error descargando datos ERA5-Land: {e}")
             return None
-    
+
     def __load_file(self, filepath):
         """Carga archivo NetCDF o GRIB con el engine apropiado"""
         engines = ['netcdf4', 'h5netcdf', 'scipy', 'cfgrib']
