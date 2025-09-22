@@ -45,8 +45,8 @@ class CopernicusTools:
                 'product_type': 'reanalysis',
                 'variable': variables,
                 'date': f'{self.config.START_DATE}/{self.config.END_DATE}',
-                'area': [self.config.BBOX[3], self.config.BBOX[0], 
-                            self.config.BBOX[1], self.config.BBOX[2]],  # [N, O, S, E]
+                'area': [self.config.BBOX_ERA5[3], self.config.BBOX_ERA5[0], 
+                            self.config.BBOX_ERA5[1], self.config.BBOX_ERA5[2]],  # [N, O, S, E]
                 'time': ['00:00', '06:00', '12:00', '18:00'],
                 'format': 'netcdf'
             }
@@ -105,8 +105,8 @@ class CopernicusTools:
                 'product_type': 'reanalysis',
                 'variable': variables,
                 'date': f'{self.config.START_DATE}/{self.config.END_DATE}',
-                'area': [self.config.BBOX[3], self.config.BBOX[0], 
-                            self.config.BBOX[1], self.config.BBOX[2]],  # [N, O, S, E]
+                'area': [self.config.BBOX_ERA5[3], self.config.BBOX_ERA5[0], 
+                            self.config.BBOX_ERA5[1], self.config.BBOX_ERA5[2]],  # [N, O, S, E]
                 'time': ['00:00', '06:00', '12:00', '18:00'],
                 'format': 'grib'
             }
