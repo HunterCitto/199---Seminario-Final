@@ -1,14 +1,18 @@
-\section{Actividades y metodología}
-\subsection{Enfoque Metodológico}
-El presente trabajo adoptará un enfoque mixto con tendencia al cuantitativo, bajo la metodología CIRSP-DM (Cross-industry Standard Process for Data Mining). Se seguirán los principios del análisis exploratorio de datos (entendimiento), tratamiento de datos satelitales (preparación) y técnicas de Machine Learning (modelado). Además, se integrarán marcos conceptuales relacionados con el manejo del fuego y la gestión de riesgos ambientales.
-\subsection{Resumen de Actividades}
+\section{Metodología}
+En el marco de la metodología Cross Industry Standard Process for Data Mining (CRISP-DM) \hyperref[sec:refs]{[Chapman1999]}, el desarrollo de la tesis comenzará con la fase de comprensión del problema y del dominio, en la cual se identificarán las variables ambientales y meteorológicas relevantes para la ocurrencia de incendios. \\
+
+Posteriormente, se realizará la recolección y consolidación de datos provenientes de las API de Fire Information for Resource Management System (FIRMS) y ERA5-Land, con el fin de establecer un conjunto de datos unificado a nivel espacial y temporal. La etapa de preparación de datos incluirá procesos de limpieza, interpolación, integración y generación de variables derivadas. Luego, se llevará a cabo un análisis exploratorio de datos (Exploratory Data Analysis, EDA) para caracterizar patrones, correlaciones y comportamientos estacionales. \\
+
+Finalmente, se abordará la fase de modelado mediante la aplicación y comparación de diferentes algoritmos de aprendizaje automático, con el objetivo de predecir la probabilidad de incendios en áreas específicas. El desempeño de los modelos será evaluado utilizando métricas de precisión y técnicas de validación cruzada.
+
+\section{Actividades}
 \begin{itemize}
     \item \textbf{Entendimiento:} Análisis de literatura académica y técnicas desarrolladas en materia de incendios forestales, modelos predictivos y uso de datos satelitales (FIRMS, CONAE, Copernicus). \\ 
     \item \textbf{Preparación de datos:} Descarga de datos satelitales de fuentes como: FIRMS (NASA), Copernicus (UE). Tratamiento de datos para consolidación de un conjunto de datos robusto. \\
     \item \textbf{Análisis, modelado y evaluación:} 
         \begin{enumerate}
-            \item Análisis exploratorio de datos (EDA) y visualización geoespacial.  .  
-            \item Identificación predictivo con algoritmos de Machine Learning aún por definir (en evaluación: Random Forest, SVM, Gaussian Mixture Models, XGBoost, Redes Neuronales Convolucionales).
+            \item Análisis exploratorio de datos (EDA) y visualización geoespacial.  
+            \item Implementación de modelos predictivos de Machine Learning aún por definir (en evaluación: Random Forest, SVM, Gaussian Mixture Models, XGBoost, Redes Neuronales Convolucionales).
             \item Evaluación de modelos mediante métricas como precisión, recall, F1-score y AUC-ROC. \\
         \end{enumerate}
     \item \textbf{Elaboración de informe:} Recopilación de resultados y redacción del documento final.  
