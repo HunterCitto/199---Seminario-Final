@@ -20,7 +20,7 @@ class ProjectConfig:
         directory.mkdir(parents = True, exist_ok = True)
 
     # Bounding box para Río Negro, Patagonia (ejemplo)
-    BBOX = [-71.8756,-41.5862,-71.3782,-41.3608]  # [Oeste, Sur, Este, Norte]
+    BBOX = [-72.0, -42.0, -71.0, -41.0] # [-71.8756,-41.5862,-71.3782,-41.3608]  # [Oeste, Sur, Este, Norte]
     BBOX_ERA5 = [-72.0, -42.0, -71.0, -41.0]  # [Oeste, Sur, Este, Norte] para celdas ERA5
 
     # Período de análisis (incendio)
