@@ -27,7 +27,7 @@ class FIRMSTools :
             backoff_factor = 0.5,
             status_forcelist = [429, 500, 502, 503, 504],
         )
-        adapter = HTTPAdapter(max_retries=retry_strategy)
+        adapter = HTTPAdapter(max_retries = retry_strategy)
         session.mount("http://", adapter)
         session.mount("https://", adapter)
         return session
@@ -45,9 +45,9 @@ class FIRMSTools :
         end = datetime.strptime(end_date, "%Y-%m-%d")
 
         while start <= end:
-            chunk_end = min(start + timedelta(days=max_days - 1), end)
+            chunk_end = min(start + timedelta(days = max_days - 1), end)
             yield start.strftime("%Y-%m-%d"), chunk_end.strftime("%Y-%m-%d")
-            start = chunk_end + timedelta(days=1)
+            start = chunk_end + timedelta(days = 1)
 
     def _download_chunk(self, source, bbox, start_date, end_date) :
         """Descarga un fragmento de datos para un rango de fechas <= 10 días"""
