@@ -20,8 +20,7 @@ class ProjectConfig:
         directory.mkdir(parents = True, exist_ok = True)
 
     # Bounding box para Río Negro, Patagonia (ejemplo)
-    BBOX = [-72.0, -42.0, -71.0, -41.0] # [-71.8756,-41.5862,-71.3782,-41.3608]  # [Oeste, Sur, Este, Norte]
-    # BBOX_ERA5 = [-72.0, -42.0, -71.0, -41.0]  # [Oeste, Sur, Este, Norte] para celdas ERA5
+    BBOX = [-72.0, -42.0, -71.0, -41.0] # [Oeste, Sur, Este, Norte]
 
     # Período de análisis (incendio)
     START_DATE = "2024-12-01"
@@ -30,7 +29,7 @@ class ProjectConfig:
     # Credenciales (desde variables de entorno)
     CDS_UID = os.getenv("CDS_UID")
     CDS_API_KEY = os.getenv("CDS_API_KEY")
-    FIRMS_API_KEY = "dfddee9b9ccda792d06d15dca8ee3cfd"
+    FIRMS_API_KEY = os.getenv("FIRMS_API_KEY")
     
     # Parámetros de análisis
     RESOLUTION = 0.1  # grados para datos meteorológicos
@@ -48,7 +47,7 @@ class ProjectConfig:
         'MODIS_SP': 'MODIS_SP',
         'MODIS_NRT': 'MODIS_NRT'
     }
-
+    
     # Columnas esperadas en datos FIRMS
     FIRMS_EXPECTED_COLUMNS = [
         'latitude', 'longitude', 'brightness', 'scan', 'track',

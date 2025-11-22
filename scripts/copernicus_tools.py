@@ -23,7 +23,6 @@ class CopernicusTools:
         elif mode == 'levels':
             return self.__download_era5_levels_data()
 
-    # LAND SIGUE SIN FUNCIONAR.
     def __download_era5_land_data(self):
         """Descarga datos ERA5-Land para variables específicas"""
 
@@ -61,7 +60,6 @@ class CopernicusTools:
             logger.error(f"Error descargando datos ERA5-Land: {e}")
             return None
 
-    # EESTE FUNCIONA-
     def __download_era5_levels_data(self):
         """Descarga datos ERA5-Levels para variables específicas"""
 
